@@ -1,25 +1,22 @@
 import 'package:findjob/constants/app_constants.dart';
 import 'package:findjob/controllers/jobs_provider.dart';
 import 'package:findjob/models/response/jobs/jobs_response.dart';
-import 'package:findjob/views/screens/jobs/job_details.dart';
-import 'package:findjob/views/screens/jobs/widgets/JobsHorizontalTile.dart';
+import 'package:findjob/views/screens/jobs/widgets/JobsVerticalTile.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/instance_manager.dart';
 import 'package:provider/provider.dart';
 
-class Popularjobs extends StatelessWidget {
-  const Popularjobs({super.key});
+class RecentJobs extends StatelessWidget {
+  const RecentJobs({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<JobsNotifier>(
       builder: (context, jobsNotifier, child) {
-        jobsNotifier.getJobs();
+        jobsNotifier.getRecent();
         return SizedBox(
-          height: hieght * 0.26,
+          height: hieght * 0.28,
           child: FutureBuilder<List<JobsResponse>>(
-            future: jobsNotifier.jobList,
+            future: jobsNotifier.recentJobs,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -30,22 +27,12 @@ class Popularjobs extends StatelessWidget {
               } else {
                 final jobs = snapshot.data;
                 return ListView.builder(
-                  scrollDirection: Axis.horizontal,
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
                   itemCount: jobs!.length,
                   itemBuilder: (context, index) {
                     var job = jobs[index];
-                    return JobsHorizontalTile(
-                      job: job,
-                      onTap: () {
-                        Get.to(
-                          () => JobDetails(
-                            id: job.id,
-                            title: job.title,
-                            agentName: job.agentName,
-                          ),
-                        );
-                      },
-                    );
+                    return JobsVerticalTile(job: job);
                   },
                 );
               }

@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 class JobsNotifier extends ChangeNotifier {
   late Future<List<JobsResponse>> jobList;
   late Future<GetJobRes> job;
+  late Future<List<JobsResponse>> recentJobs;
+
 
   Future<List<JobsResponse>> getJobs() {
     jobList = JobsHelper.getJobs();
@@ -15,5 +17,9 @@ class JobsNotifier extends ChangeNotifier {
   Future<GetJobRes> getJob(String jobId) {
     job = JobsHelper.getJob(jobId);
     return job;
+  }
+   Future<List<JobsResponse>> getRecent() {
+    recentJobs = JobsHelper.getJobs();
+    return recentJobs;
   }
 }

@@ -33,4 +33,18 @@ class JobsHelper {
       throw Exception('Failed to load jobs');
     }
   }
+
+  static Future<List<JobsResponse>> getRecent() async {
+    Map<String, String> requestHeader = {'Content-Type': 'application/json'};
+    var url = Uri.http(Config.apiUrl, Config.jobs, {'new': 'true'});
+
+    var response = await client.get(url, headers: requestHeader);
+
+    if (response.statusCode == 200) {
+      var jobList = jobsResponseFromJson(response.body);
+      return jobList;
+    } else {
+      throw Exception('Failed to load jobs');
+    }
+  }
 }

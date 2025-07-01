@@ -6,6 +6,7 @@ import 'package:findjob/views/common/heading_widget.dart';
 import 'package:findjob/views/common/search.dart';
 import 'package:findjob/views/screens/auth/profile.dart';
 import 'package:findjob/views/screens/jobs/widgets/PopularJobs.dart';
+import 'package:findjob/views/screens/jobs/widgets/Recentlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/get_core.dart';
@@ -68,9 +69,14 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 30.h),
                 HeadingWidget(text: 'Popular Jobs'),
                 SizedBox(height: 15.h),
-                Popularjobs(),
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(12.w)),
+                  child: Popularjobs(),
+                ),
                 SizedBox(height: 15.h),
                 HeadingWidget(text: 'Recently Posted Jobs'),
+                SizedBox(height: 15.h),
+                RecentJobs(),
               ],
             ),
           ),

@@ -3,14 +3,21 @@ import 'package:findjob/views/common/reusable_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomOutlineBtn extends StatelessWidget {
-  const CustomOutlineBtn({super.key, this.width, this.height, required this.text, this.onTab, required this.color, required this.background});
+  const CustomOutlineBtn({
+    super.key,
+    this.width,
+    this.height,
+    required this.text,
+    this.onTab,
+    required this.color,
+    this.background,
+  });
   final double? width;
   final double? height;
   final String text;
   final void Function()? onTab;
   final Color color;
-  final Color background;
-
+  final Color? background;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +29,13 @@ class CustomOutlineBtn extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(9)),
           color: background,
-          border: Border.all(
-            width: 1,
-            color: color
-          )
+          border: Border.all(width: 1, color: color),
         ),
         child: Center(
-          child: ReusableText(text: text, style: appstyle(14, color, FontWeight.bold)),
+          child: ReusableText(
+            text: text,
+            style: appstyle(14, color, FontWeight.bold),
+          ),
         ),
       ),
     );

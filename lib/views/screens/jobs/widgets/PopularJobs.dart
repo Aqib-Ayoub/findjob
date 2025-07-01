@@ -1,8 +1,11 @@
 import 'package:findjob/constants/app_constants.dart';
 import 'package:findjob/controllers/jobs_provider.dart';
 import 'package:findjob/models/response/jobs/jobs_response.dart';
+import 'package:findjob/views/screens/jobs/job_details.dart';
 import 'package:findjob/views/screens/jobs/widgets/JobsHorizontalTile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/instance_manager.dart';
 import 'package:provider/provider.dart';
 
 class Popularjobs extends StatelessWidget {
@@ -33,8 +36,15 @@ class Popularjobs extends StatelessWidget {
                     var job = jobs[index];
                     return JobsHorizontalTile(
                       job: job,
-                      //TODO
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(
+                          () => JobDetails(
+                            id: job.id,
+                            title: job.title,
+                            agentName: job.agentName,
+                          ),
+                        );
+                      },
                     );
                   },
                 );

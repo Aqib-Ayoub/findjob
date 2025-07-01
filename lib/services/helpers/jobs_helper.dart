@@ -9,7 +9,6 @@ class JobsHelper {
   static Future<List<JobsResponse>> getJobs() async {
     Map<String, String> requestHeader = {'Content-Type': 'application/json'};
     var url = Uri.http(Config.apiUrl, Config.jobs);
-    print(url);
 
     var response = await client.get(url, headers: requestHeader);
 

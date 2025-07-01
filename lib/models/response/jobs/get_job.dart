@@ -18,6 +18,7 @@ class GetJobRes {
     required this.requirements,
     required this.imageUrl,
     required this.agentId,
+    required this.agentName,
     required this.updatedAt,
   });
 
@@ -33,22 +34,45 @@ class GetJobRes {
   final List<String> requirements;
   final String imageUrl;
   final String agentId;
+  final String agentName;
   final DateTime updatedAt;
 
   factory GetJobRes.fromJson(Map<String, dynamic> json) => GetJobRes(
-    id: json["_id"],
-    title: json["title"],
-    location: json["location"],
-    company: json["company"],
-    hiring: json["hiring"],
-    description: json["description"],
-    salary: json["salary"],
-    period: json["period"],
-    contract: json["contract"],
-    requirements: List<String>.from(json["requirements"].map((x) => x)),
-    imageUrl: json["imageUrl"],
-    agentId: json["agentId"],
-    updatedAt: DateTime.parse(json["updatedAt"]),
+    id: json["_id"] ?? '',
+    title: json["title"] ?? '',
+    location: json["location"] ?? '',
+    company: json["company"] ?? '',
+    hiring: json["hiring"] ?? false,
+    description: json["description"] ?? '',
+    salary: json["salary"] ?? '20k',
+    period: json["period"] ?? '',
+    contract: json["contract"] ?? '',
+    requirements:
+        json["requirements"] != null
+            ? List<String>.from(json["requirements"].map((x) => x.toString()))
+            : [],
+    imageUrl: json["imageUrl"] ?? '',
+    agentId: json["agentId"] ?? '',
+    agentName: json["agentName"] ?? '',
+    updatedAt:
+        json["updatedAt"] != null
+            ? DateTime.tryParse(json["updatedAt"]) ?? DateTime.now()
+            : DateTime.now(),
+    // non nullable
+    // id: json["_id"],
+    // title: json["title"],
+    // location: json["location"],
+    // company: json["company"],
+    // hiring: json["hiring"],
+    // description: json["description"],
+    // salary: json["salary"],
+    // period: json["period"],
+    // contract: json["contract"],
+    // requirements: List<String>.from(json["requirements"].map((x) => x)),
+    // imageUrl: json["imageUrl"],
+    // agentId: json["agentId"],
+    // agentName: json["agentName"],
+    // updatedAt: DateTime.parse(json["updatedAt"]),
   );
 
   Map<String, dynamic> toJson() => {

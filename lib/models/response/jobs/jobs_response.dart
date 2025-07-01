@@ -18,6 +18,7 @@ class JobsResponse {
     required this.requirements,
     required this.imageUrl,
     required this.agentId,
+    required this.agentName, // Assuming agentName is not in the JSON
     required this.createdAt,
     required this.updatedAt,
   });
@@ -34,6 +35,7 @@ class JobsResponse {
   final List<String> requirements;
   final String imageUrl;
   final String agentId;
+  final String agentName; // Assuming agentName is not in the JSON
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -67,6 +69,7 @@ class JobsResponse {
             : [],
     imageUrl: json["imageUrl"] ?? '',
     agentId: json["agentId"] ?? '',
+    agentName: json["agentName"] ?? '', // Assuming agentName is not in the JSON
     createdAt:
         json["createdAt"] != null
             ? DateTime.parse(json["createdAt"])

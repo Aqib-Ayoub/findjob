@@ -1,20 +1,22 @@
 import 'package:findjob/constants/app_constants.dart';
+import 'package:findjob/models/response/jobs/get_job.dart';
 import 'package:findjob/models/response/jobs/jobs_response.dart';
-import 'package:findjob/views/common/exports.dart';
-import 'package:findjob/views/common/height_spacer.dart';
+import 'package:findjob/views/common/app_style.dart';
+import 'package:findjob/views/common/custom_outline_btn.dart';
 import 'package:findjob/views/common/reusable_text.dart';
 import 'package:findjob/views/common/width_spacer.dart';
 import 'package:findjob/views/screens/jobs/job_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
-class JobsVerticalTile extends StatelessWidget {
-  const JobsVerticalTile({super.key, required this.job});
-
+class UploadedTile extends StatelessWidget {
+  const UploadedTile({super.key, required this.job, required this.text});
   final JobsResponse job;
+  final String text;
 
+  @override
   @override
   Widget build(BuildContext context) {
     return FittedBox(
@@ -35,7 +37,7 @@ class JobsVerticalTile extends StatelessWidget {
             height: hieght * 0.1,
             width: width,
             decoration: BoxDecoration(
-              color: Color(kLightGrey.value),
+              color: Color(0x09000000),
               borderRadius: BorderRadius.all(Radius.circular(9.w)),
             ),
             child: Column(
@@ -59,7 +61,7 @@ class JobsVerticalTile extends StatelessWidget {
                             ReusableText(
                               text: job.company,
                               style: appstyle(
-                                18,
+                                12,
                                 Color(kDark.value),
                                 FontWeight.w500,
                               ),
@@ -85,12 +87,21 @@ class JobsVerticalTile extends StatelessWidget {
                             ),
                           ],
                         ),
+                        text == 'popular'
+                            ? CustomOutlineBtn(
+                              width: 90.w,
+                              height: 36.h,
+
+                              text: 'View',
+                              color: Color(kLightBlue.value),
+                            )
+                            : CustomOutlineBtn(
+                              width: 90.w,
+                              height: 36.h,
+                              text: 'Apply',
+                              color: Color(kLightBlue.value),
+                            ),
                       ],
-                    ),
-                    CircleAvatar(
-                      radius: 18.w,
-                      backgroundColor: Color(kLight.value),
-                      child: Icon(Ionicons.chevron_forward),
                     ),
                   ],
                 ),

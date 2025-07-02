@@ -62,7 +62,7 @@ class JobsHorizontalTile extends StatelessWidget {
                   ],
                 ),
 
-                HeightSpacer(size: 15.h),
+                HeightSpacer(size: 12.h),
                 ReusableText(
                   text: job.title,
                   style: appstyle(18, Color(kDark.value), FontWeight.w600),
@@ -96,7 +96,7 @@ class JobsHorizontalTile extends StatelessWidget {
                       ],
                     ),
                     CircleAvatar(
-                      radius: 28,
+                      radius: 22,
                       backgroundColor: Color(kLight.value),
                       child: Icon(Ionicons.chevron_forward),
                     ),

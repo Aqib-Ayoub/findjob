@@ -5,7 +5,7 @@ class CustomField extends StatelessWidget {
   const CustomField({
     Key? key,
     required this.hintText,
-    required this.controller,
+    this.controller,
     this.validator,
     this.keyboard,
     this.suffixIcon,
@@ -13,7 +13,7 @@ class CustomField extends StatelessWidget {
     this.onEditingComplete,
   }) : super(key: key);
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String hintText;
   final TextInputType? keyboard;
   final String? Function(String?)? validator;

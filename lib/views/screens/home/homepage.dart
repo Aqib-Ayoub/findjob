@@ -8,6 +8,7 @@ import 'package:findjob/views/screens/auth/profile.dart';
 import 'package:findjob/views/screens/jobs/job_list.dart';
 import 'package:findjob/views/screens/jobs/widgets/PopularJobs.dart';
 import 'package:findjob/views/screens/jobs/widgets/Recentlist.dart';
+import 'package:findjob/views/screens/search/widgets/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/get_core.dart';
@@ -66,7 +67,11 @@ class _HomePageState extends State<HomePage> {
                   style: appstyle(30, Color(kDark.value), FontWeight.bold),
                 ),
                 SizedBox(height: 20.h),
-                SearchWidget(onTap: () {}),
+                SearchWidget(
+                  onTap: () {
+                    Get.to(() => SearchPage());
+                  },
+                ),
                 SizedBox(height: 30.h),
                 HeadingWidget(
                   text: 'Popular Jobs',

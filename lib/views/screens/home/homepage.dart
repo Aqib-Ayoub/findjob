@@ -4,6 +4,7 @@ import 'package:findjob/views/common/drawer/drawer_widget.dart';
 import 'package:findjob/views/common/exports.dart';
 import 'package:findjob/views/common/heading_widget.dart';
 import 'package:findjob/views/common/search.dart';
+import 'package:findjob/views/screens/auth/login.dart';
 import 'package:findjob/views/screens/auth/profile.dart';
 import 'package:findjob/views/screens/jobs/job_list.dart';
 import 'package:findjob/views/screens/jobs/widgets/PopularJobs.dart';
@@ -35,7 +36,8 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(12.h),
               child: GestureDetector(
                 onTap: () {
-                  Get.to(() => ProfilePage(drawer: false));
+                  // Get.to(() => ProfilePage(drawer: false));
+                  Get.to(() => LoginPage());
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(50.r)),

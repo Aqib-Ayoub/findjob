@@ -36,8 +36,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(12.h),
               child: GestureDetector(
                 onTap: () {
-                  // Get.to(() => ProfilePage(drawer: false));
-                  Get.to(() => LoginPage());
+                  Get.to(() => ProfilePage(drawer: false));
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(50.r)),

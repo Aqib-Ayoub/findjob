@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/instance_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PageThree extends StatelessWidget {
   const PageThree({super.key});
@@ -22,31 +23,36 @@ class PageThree extends StatelessWidget {
         child: Column(
           children: [
             Image.asset('assets/images/page3.png'),
-            SizedBox(
-              height: 20.h,
+            SizedBox(height: 20.h),
+            ReusableText(
+              text: 'Welcome to FindJob',
+              style: appstyle(30, Color(kLight.value), FontWeight.w600),
             ),
-            ReusableText(text: 'Welcome to FindJob', style: appstyle(30, Color(kLight.value), FontWeight.w600),),
-            SizedBox(
-              height: 15.h,
-      
-            ),
+            SizedBox(height: 15.h),
             Padding(
               padding: EdgeInsets.all(8.h),
-              child: Text('Discover your dream job with FindJob — explore thousands of opportunities, apply in seconds, and take the next step in your career journey.',textAlign: TextAlign.center, style: appstyle(14, Color(kLight.value), FontWeight.normal),),
+              child: Text(
+                'Discover your dream job with FindJob — explore thousands of opportunities, apply in seconds, and take the next step in your career journey.',
+                textAlign: TextAlign.center,
+                style: appstyle(14, Color(kLight.value), FontWeight.normal),
+              ),
             ),
-            SizedBox(height: 15,),
+            SizedBox(height: 15),
             CustomOutlineBtn(
-              onTab: (){
-                Get.to(()=> MainScreen());
+              onTab: () async {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+
+                prefs.setBool('entrypoint', true);
+
+                Get.to(() => MainScreen());
               },
               text: 'Continue as guest',
               height: hieght * 0.05,
-              width: width *0.9,
+              width: width * 0.9,
               color: Color(kLight.value),
               background: Color(kLightBlue.value),
-            
             ),
-
           ],
         ),
       ),

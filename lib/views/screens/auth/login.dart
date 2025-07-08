@@ -1,5 +1,6 @@
 import 'package:findjob/controllers/exports.dart';
 import 'package:findjob/controllers/login_provider.dart';
+import 'package:findjob/models/request/auth/login_model.dart';
 import 'package:findjob/views/common/app_bar.dart';
 import 'package:findjob/views/common/back_btn.dart';
 import 'package:findjob/views/common/custom_btn.dart';
@@ -41,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Consumer<LoginNotifier>(
       builder: (context, loginNotifier, child) {
+        loginNotifier.getPrefs();
         return Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(50),
@@ -152,7 +154,15 @@ class _LoginPageState extends State<LoginPage> {
                                 return CustomButton(
                                   text: 'Login',
                                   //TODO: Implement login functionality
-                                  onTap: () {},
+                                  onTap: () {
+                                    loginNotifier.loader = true;
+                                    LoginModel model = LoginModel(
+                                      email: email.text,
+                                      password: password.text,
+                                    );
+                                    String newModel = loginModelToJson(model);
+                                    loginNotifier.login(newModel, zoomNotifier);
+                                  },
                                 );
                               },
                             ),

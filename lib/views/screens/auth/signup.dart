@@ -2,6 +2,7 @@ import 'package:findjob/constants/app_constants.dart';
 import 'package:findjob/controllers/exports.dart';
 import 'package:findjob/controllers/login_provider.dart';
 import 'package:findjob/controllers/zoom_provider.dart';
+import 'package:findjob/models/request/auth/signup_model.dart';
 import 'package:findjob/views/common/app_bar.dart';
 import 'package:findjob/views/common/app_style.dart';
 import 'package:findjob/views/common/back_btn.dart';
@@ -84,7 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ),
                             HeightSpacer(size: 40.h),
                             CustomTextField(
-                              controller: email,
+                              controller: name,
                               hintText: 'Full Name',
                               keyboardType: TextInputType.text,
                               validator: (name) {
@@ -167,8 +168,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               builder: (context, zoomNotifier, child) {
                                 return CustomButton(
                                   text: 'Register',
-                                  //TODO: Implement login functionality
-                                  onTap: () {},
+                                  onTap: () {
+                                    signUpNotifier.loader = true;
+                                    SignupModel model = SignupModel(
+                                      username: name.text,
+                                      email: email.text,
+                                      password: password.text,
+                                    );
+                                    String newModel = signupModelToJson(model);
+                                    signUpNotifier.signUp(newModel);
+                                  },
                                 );
                               },
                             ),

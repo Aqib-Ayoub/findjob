@@ -29,6 +29,7 @@ class JobDetails extends StatefulWidget {
 class _JobDetailsState extends State<JobDetails> {
   @override
   Widget build(BuildContext context) {
+    var loginNotifiere = Provider.of<LoginNotifier>(context);
     return Consumer<JobsNotifier>(
       builder: (context, jobsNotifier, child) {
         jobsNotifier.getJob(widget.id);
@@ -37,14 +38,16 @@ class _JobDetailsState extends State<JobDetails> {
             preferredSize: Size.fromHeight(50),
             child: CustomAppBar(
               action: [
-                GestureDetector(
-                  //TODO
-                  onTap: () {},
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 12.w),
-                    child: Icon(Fontisto.bookmark),
-                  ),
-                ),
+                loginNotifiere.loggedIn == true
+                    ? GestureDetector(
+                      //TODO
+                      onTap: () {},
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 12.w),
+                        child: Icon(Fontisto.bookmark),
+                      ),
+                    )
+                    : SizedBox.shrink(),
               ],
               child: BackBtn(),
             ),
@@ -210,7 +213,10 @@ class _JobDetailsState extends State<JobDetails> {
                             padding: EdgeInsets.only(bottom: 20.w),
                             child: CustomOutlineBtn(
                               height: hieght * 0.06,
-                              text: 'Please Login',
+                              text:
+                                  loginNotifiere.loggedIn == false
+                                      ? 'Please Login'
+                                      : 'Apply',
                               color: Color(kLight.value),
                               background: Color(kOrange.value),
                             ),

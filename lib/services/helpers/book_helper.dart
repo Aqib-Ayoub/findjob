@@ -47,32 +47,46 @@ class BookMarkHelper {
     }
   }
 
-
   static Future<Bookmark?> getBookmark(String jobId) async {
-    try{
+    try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token= prefs.getString('token');
-      if(token == null){
+      String? token = prefs.getString('token');
+      if (token == null) {
         return null;
       }
-      Map<String, String> requestHeaders ={
+      Map<String, String> requestHeaders = {
         'Content-Type': 'application/json',
-        'authorization': 'Bearer $token'
+        'authorization': 'Bearer $token',
       };
-      var url =Uri.http(Config.apiUrl, "${Config.singleBookmarkUrl}/$jobId");
-      
-      var response = await client.get(url,headers: requestHeaders);
+      var url = Uri.http(Config.apiUrl, "${Config.singleBookmarkUrl}/$jobId");
 
-      if(response.statusCode == 200){
+      var response = await client.get(url, headers: requestHeaders);
+
+      if (response.statusCode == 200) {
         var bookmark = bookmarkFromJson(response.body);
         return bookmark;
-      }else{
+      } else {
         return null;
       }
-    }catch(error){
+    } catch (error) {
       return null;
-
     }
-   
+  }
 
+  static Future<bool> deleteBookmarks(String jobId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer $token',
+    };
+
+    var url = Uri.http(Config.apiUrl, "${Config.bookmarkUrl}/$jobId");
+    var response = await client.delete(url, headers: requestHeaders);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

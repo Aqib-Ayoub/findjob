@@ -1,10 +1,10 @@
+import 'package:findjob/controllers/login_provider.dart';
 import 'package:findjob/views/common/app_bar.dart';
 import 'package:findjob/views/common/cached_network_image.dart';
 import 'package:findjob/views/common/drawer/drawer_widget.dart';
 import 'package:findjob/views/common/exports.dart';
 import 'package:findjob/views/common/heading_widget.dart';
 import 'package:findjob/views/common/search.dart';
-import 'package:findjob/views/screens/auth/login.dart';
 import 'package:findjob/views/screens/auth/profile.dart';
 import 'package:findjob/views/screens/jobs/job_list.dart';
 import 'package:findjob/views/screens/jobs/widgets/PopularJobs.dart';
@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,6 +28,8 @@ class _HomePageState extends State<HomePage> {
       'https://imgs.search.brave.com/l0Xmc6G-daKFtHTlxFw8vwXoGXPbl7-dUyzH9qFp4a0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Y3JlYXRlLnZpc3Rh/LmNvbS9hcGkvbWVk/aWEvc21hbGwvMTA2/NjUzNTUvc3RvY2st/cGhvdG8tM2QtYWJz/dHJhY3QtYW5kLWZ1/dHVyaXN0aWMtbGV0/dGVyLXM';
   @override
   Widget build(BuildContext context) {
+    var loginNotifier = Provider.of<LoginNotifier>(context);
+    loginNotifier.getPrefs();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.h),

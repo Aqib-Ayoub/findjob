@@ -50,7 +50,7 @@ class LoginNotifier extends ChangeNotifier {
       } else {
         loader = false;
         Get.snackbar(
-          'Failes to Sign In',
+          'Failed to Sign In',
           'Please check your credentials',
           colorText: Color(kLight.value),
           backgroundColor: Color(kOrange.value),

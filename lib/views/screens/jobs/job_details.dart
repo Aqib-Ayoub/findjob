@@ -1,4 +1,6 @@
 import 'package:findjob/controllers/exports.dart';
+import 'package:findjob/models/response/jobs/get_job.dart';
+import 'package:findjob/services/helpers/jobs_helper.dart';
 import 'package:findjob/views/common/app_bar.dart';
 import 'package:findjob/views/common/back_btn.dart';
 import 'package:findjob/views/common/custom_outline_btn.dart';
@@ -27,6 +29,18 @@ class JobDetails extends StatefulWidget {
 }
 
 class _JobDetailsState extends State<JobDetails> {
+  late Future<GetJobRes> job;
+
+  @override
+  void initState() {
+    getJob();
+    super.initState();
+  }
+
+  getJob() {
+    job = JobsHelper.getJob(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     var loginNotifiere = Provider.of<LoginNotifier>(context);
@@ -39,13 +53,18 @@ class _JobDetailsState extends State<JobDetails> {
             child: CustomAppBar(
               action: [
                 loginNotifiere.loggedIn == true
-                    ? GestureDetector(
-                      //TODO
-                      onTap: () {},
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 12.w),
-                        child: Icon(Fontisto.bookmark),
-                      ),
+                    ? Consumer<BookNotifier>(
+                      builder: (context, bookNotifier, child) {
+                        bookNotifier.getBookmark(widget.id);
+                        return GestureDetector(
+                          //TODO
+                          onTap: () {},
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 12.w),
+                            child: Icon(Fontisto.bookmark),
+                          ),
+                        );
+                      },
                     )
                     : SizedBox.shrink(),
               ],
@@ -55,7 +74,7 @@ class _JobDetailsState extends State<JobDetails> {
           body: buildStyledContainer(
             context,
             FutureBuilder(
-              future: jobsNotifier.job,
+              future: job,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: PageLoader());

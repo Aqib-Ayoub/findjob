@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:findjob/models/request/bookmarks/all_bookmarks.dart';
 import 'package:findjob/services/helpers/book_helper.dart';
 import 'package:findjob/views/common/exports.dart';

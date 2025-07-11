@@ -58,7 +58,7 @@ class BookMarkHelper {
         'Content-Type': 'application/json',
         'authorization': 'Bearer $token',
       };
-      var url = Uri.http(Config.apiUrl, "${Config.singleBookmarkUrl}/$jobId");
+      var url = Uri.http(Config.apiUrl, "${Config.singleBookmarkUrl}$jobId");
 
       var response = await client.get(url, headers: requestHeaders);
 

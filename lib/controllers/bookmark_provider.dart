@@ -31,16 +31,15 @@ class BookNotifier extends ChangeNotifier {
   }
 
   getBookmark(String jobId) {
-    BookMarkHelper.getBookmark(jobId).then((bookmark) {
-      if (bookmark == null) {
-        print('False');
-        isBookmark = false;
-      } else {
-        print('true');
-        isBookmark = bookmark.status;
-        isBookmarkId = bookmark.bookmarkId;
-      }
-    });
+    var bookmark = BookMarkHelper.getBookmark(jobId);
+    bookmark.then(
+      (value) => {
+        if (value == null)
+          {isBookmark = false, isBookmarkId = ''}
+        else
+          {isBookmark = true, isBookmarkId = value.bookmarkId},
+      },
+    );
   }
 
   deleteBookmark(String jobId) {

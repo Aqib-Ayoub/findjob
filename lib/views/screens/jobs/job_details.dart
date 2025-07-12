@@ -61,7 +61,11 @@ class _JobDetailsState extends State<JobDetails> {
                           onTap: () {},
                           child: Padding(
                             padding: EdgeInsets.only(right: 12.w),
-                            child: Icon(Fontisto.bookmark),
+                            child: Icon(
+                              bookNotifier.bookmark == false
+                                  ? Fontisto.bookmark
+                                  : Fontisto.bookmark_alt,
+                            ),
                           ),
                         );
                       },

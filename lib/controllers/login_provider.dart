@@ -1,7 +1,6 @@
 import 'package:findjob/constants/app_constants.dart';
 import 'package:findjob/controllers/exports.dart';
 import 'package:findjob/services/helpers/auth_helper.dart';
-import 'package:findjob/views/screens/home/homepage.dart';
 import 'package:findjob/views/screens/mainscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';

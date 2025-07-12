@@ -24,12 +24,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      final loginNotifier = Provider.of<LoginNotifier>(context, listen: false);
+      loginNotifier.getPrefs();
+    });
+  }
+
   String imageUrl =
       'https://imgs.search.brave.com/l0Xmc6G-daKFtHTlxFw8vwXoGXPbl7-dUyzH9qFp4a0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/Y3JlYXRlLnZpc3Rh/LmNvbS9hcGkvbWVk/aWEvc21hbGwvMTA2/NjUzNTUvc3RvY2st/cGhvdG8tM2QtYWJz/dHJhY3QtYW5kLWZ1/dHVyaXN0aWMtbGV0/dGVyLXM';
   @override
   Widget build(BuildContext context) {
-    var loginNotifier = Provider.of<LoginNotifier>(context);
-    loginNotifier.getPrefs();
+    // var loginNotifier = Provider.of<LoginNotifier>(context);
+    // loginNotifier.getPrefs();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.h),

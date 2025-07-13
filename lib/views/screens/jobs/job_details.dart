@@ -1,4 +1,6 @@
 import 'package:findjob/controllers/exports.dart';
+import 'package:findjob/models/request/bookmarks/book_res.dart';
+import 'package:findjob/models/response/bookmarks/bookmark_res.dart';
 import 'package:findjob/models/response/jobs/get_job.dart';
 import 'package:findjob/services/helpers/jobs_helper.dart';
 import 'package:findjob/views/common/app_bar.dart';
@@ -58,7 +60,19 @@ class _JobDetailsState extends State<JobDetails> {
                         bookNotifier.getBookmark(widget.id);
                         return GestureDetector(
                           //TODO
-                          onTap: () {},
+                          onTap: () {
+                            if (bookNotifier.bookmark == true) {
+                              bookNotifier.deleteBookmark(
+                                bookNotifier.bookmarkId,
+                              );
+                            } else {
+                              BookmarkReqRes model = BookmarkReqRes(
+                                job: widget.id,
+                              );
+                              var newModel = bookmarkReqResToJson(model);
+                              bookNotifier.addBookmark(newModel);
+                            }
+                          },
                           child: Padding(
                             padding: EdgeInsets.only(right: 12.w),
                             child: Icon(

@@ -73,7 +73,7 @@ class BookMarkHelper {
     }
   }
 
-  static Future<bool> deleteBookmarks(String jobId) async {
+  static Future<bool> deleteBookmarks(String bookmarkId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     Map<String, String> requestHeaders = {
@@ -81,7 +81,7 @@ class BookMarkHelper {
       'authorization': 'Bearer $token',
     };
 
-    var url = Uri.http(Config.apiUrl, "${Config.bookmarkUrl}/$jobId");
+    var url = Uri.http(Config.apiUrl, "${Config.bookmarkUrl}/$bookmarkId");
     var response = await client.delete(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       return true;

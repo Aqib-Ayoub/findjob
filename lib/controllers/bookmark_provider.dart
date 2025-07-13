@@ -27,7 +27,10 @@ class BookNotifier extends ChangeNotifier {
   }
 
   addBookmark(String model) {
-    BookMarkHelper.addBookmark(model).then((bookmark) {});
+    BookMarkHelper.addBookmark(model).then((bookmark) {
+      isBookmark = true;
+      isBookmarkId = bookmark.bookmarkId;
+    });
   }
 
   getBookmark(String jobId) {
@@ -53,6 +56,7 @@ class BookNotifier extends ChangeNotifier {
           icon: Icon(Icons.bookmark_remove_outlined),
         );
       }
+      isBookmark = false;
     });
   }
 

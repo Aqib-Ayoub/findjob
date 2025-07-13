@@ -31,25 +31,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.h),
         child: CustomAppBar(
-          action: [
-            Padding(
-              padding: EdgeInsets.all(12.h),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(() => ProfilePage(drawer: false));
-                },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(50.r)),
-                  child: CachedNetworkImage(
-                    image: imageUrl,
-                    height: 25.h,
-                    width: 25.w,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-          ],
+          text: 'Bookmark',
           child: Padding(
             padding: EdgeInsets.all(12.h),
             child: DrawerWidget(color: Color(kDark.value)),

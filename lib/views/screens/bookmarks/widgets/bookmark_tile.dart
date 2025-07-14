@@ -21,13 +21,13 @@ class BookmarkTile extends StatelessWidget {
     return FittedBox(
       child: GestureDetector(
         onTap: () {
-          // Get.to(
-          //   () => JobDetails(
-          //     title: job.title,
-          //     id: job.id,
-          //     agentName: job.agentId,
-          //   ),
-          // );
+          Get.to(
+            () => JobDetails(
+              title: bookmark.job.title,
+              id: bookmark.job.id,
+              agentName: bookmark.job.agentId,
+            ),
+          );
         },
         child: Padding(
           padding: EdgeInsets.only(bottom: 8.0),

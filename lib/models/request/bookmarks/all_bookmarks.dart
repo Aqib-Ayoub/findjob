@@ -77,7 +77,7 @@ class Job {
     hiring: json["hiring"],
     imageUrl: json["imageUrl"],
     agentId: json["agentId"],
-    company: json["company"],
+    company: json["company"] ?? "",
     v: json["__v"],
   );
 

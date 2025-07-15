@@ -16,6 +16,7 @@ class CachedNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.network(
+      //TODO add placeholder
       image,
       fit: fit ?? BoxFit.cover,
       height: height,

@@ -50,7 +50,8 @@ class AuthHelper {
     }
   }
 
-  static Future<ProfileRes> getProfile(String bookmarkId) async {
+  // static Future<ProfileRes> getProfile(String bookmarkId) async {
+  static Future<ProfileRes> getProfile() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     if (token == null) {

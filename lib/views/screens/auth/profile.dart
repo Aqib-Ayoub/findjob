@@ -39,27 +39,30 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
-      body:loginNotifier.loggedIn ==false ? NonUser() :  Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w),
-          child: Consumer<LoginNotifier>(
-            builder: (context, loginNotifier, child) {
-              return CustomOutlineBtn(
-                onTab: () {
-                  zoomNotifier.currentIndex = 0;
-                  loginNotifier.logout();
-                  Get.to(() => MainScreen());
-                },
-                width: width,
-                height: 60,
-                text: 'Logout',
-                color: Color(kLight.value),
-                background: Color(Colors.red.value),
-              );
-            },
-          ),
-        ),
-      ),
+      body:
+          loginNotifier.loggedIn == false
+              ? NonUser()
+              : Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: Consumer<LoginNotifier>(
+                    builder: (context, loginNotifier, child) {
+                      return CustomOutlineBtn(
+                        onTab: () {
+                          zoomNotifier.currentIndex = 0;
+                          loginNotifier.logout();
+                          Get.to(() => MainScreen());
+                        },
+                        width: width,
+                        height: 60,
+                        text: 'Logout',
+                        color: Color(kLight.value),
+                        background: Color(Colors.red.value),
+                      );
+                    },
+                  ),
+                ),
+              ),
     );
   }
 }

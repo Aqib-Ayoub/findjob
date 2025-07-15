@@ -1,4 +1,5 @@
 import 'package:findjob/models/response/auth/login_res_model.dart';
+import 'package:findjob/models/response/auth/profile_model.dart';
 import 'package:findjob/services/config.dart';
 import 'package:http/http.dart' as https;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,6 +47,31 @@ class AuthHelper {
     } else {
       print('Error: ${response.statusCode}');
       return false;
+    }
+  }
+
+  static Future<ProfileRes> getProfile(String bookmarkId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token == null) {
+      throw Exception('No authentication token provided');
+    }
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer $token',
+    };
+
+    var url = Uri.http(Config.apiUrl, Config.profileUrl);
+    try {
+      var response = await client.get(url, headers: requestHeaders);
+      if (response.statusCode == 200) {
+        var profile = profileResFromJson(response.body);
+        return profile;
+      } else {
+        throw Exception('Failed to get profie');
+      }
+    } catch (error) {
+      throw Exception('Failed to get profile $error');
     }
   }
 }

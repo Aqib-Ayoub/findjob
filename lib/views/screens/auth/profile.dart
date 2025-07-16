@@ -14,6 +14,7 @@ import 'package:findjob/views/common/reusable_text.dart';
 import 'package:findjob/views/common/styled_container.dart';
 import 'package:findjob/views/common/width_spacer.dart';
 import 'package:findjob/views/screens/auth/non_user.dart';
+import 'package:findjob/views/screens/auth/widgets/skills.dart';
 import 'package:findjob/views/screens/mainscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -155,6 +156,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
 
                           HeightSpacer(size: 20),
+                          SkillsWidget(),
+                          HeightSpacer(size: 20),
+
                           !profile.isAgent
                               ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,11 +171,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                       FontWeight.w600,
                                     ),
                                   ),
-                                  HeightSpacer(size: 20),
+                                  HeightSpacer(size: 10),
                                   CustomOutlineBtn(
                                     width: width,
                                     height: 40.h,
-                                    text: 'Upload a job',
+                                    text: 'Add a job',
+                                    color: Color(kOrange.value),
+                                  ),
+                                  HeightSpacer(size: 10),
+                                  CustomOutlineBtn(
+                                    width: width,
+                                    height: 40.h,
+                                    text: 'Upload Information',
                                     color: Color(kOrange.value),
                                   ),
                                 ],

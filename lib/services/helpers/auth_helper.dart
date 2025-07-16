@@ -1,5 +1,6 @@
 import 'package:findjob/models/response/auth/login_res_model.dart';
 import 'package:findjob/models/response/auth/profile_model.dart';
+import 'package:findjob/models/response/auth/skills.dart';
 import 'package:findjob/services/config.dart';
 import 'package:http/http.dart' as https;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +34,6 @@ class AuthHelper {
     var url = Uri.http(Config.apiUrl, Config.loginUrl);
     var response = await client.post(url, headers: requestHeaders, body: model);
     if (response.statusCode == 200) {
-      print('Success');
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var user = loginResponseModelFromJson(response.body);
 
@@ -45,7 +45,6 @@ class AuthHelper {
       await prefs.setBool('loggedIn', true);
       return true;
     } else {
-      print('Error: ${response.statusCode}');
       return false;
     }
   }
@@ -70,6 +69,30 @@ class AuthHelper {
         return profile;
       } else {
         throw Exception('Failed to get profie');
+      }
+    } catch (error) {
+      throw Exception('Failed to get profile $error');
+    }
+  }
+
+  static Future<List<Skills>> getSkills() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token == null) {
+      throw Exception('No autentication token provided');
+    }
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer $token',
+    };
+    var url = Uri.http(Config.apiUrl, Config.skillsUrl);
+    try {
+      var response = await client.get(url, headers: requestHeaders);
+      if (response.statusCode == 200) {
+        var skills = skillsFromJson(response.body);
+        return skills;
+      } else {
+        throw Exception('Failed to get profile');
       }
     } catch (error) {
       throw Exception('Failed to get profile $error');

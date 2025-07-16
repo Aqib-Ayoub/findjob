@@ -1,4 +1,5 @@
 import 'package:findjob/controllers/exports.dart';
+import 'package:findjob/controllers/skills_provider.dart';
 import 'package:findjob/views/screens/mainscreen.dart';
 import 'package:findjob/views/screens/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => BookNotifier()),
         ChangeNotifierProvider(create: (context) => ImageUpoader()),
         ChangeNotifierProvider(create: (context) => ProfileNotifier()),
+        ChangeNotifierProvider(create: (context) => SkillsNotifier()),
       ],
       child: MyApp(),
     ),

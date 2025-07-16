@@ -146,12 +146,44 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ],
                                 ),
-                                Icon(Feather.edit),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Icon(Feather.edit),
+                                ),
                               ],
                             ),
                           ),
 
                           HeightSpacer(size: 20),
+                          !profile.isAgent
+                              ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ReusableText(
+                                    text: 'Agent Section',
+                                    style: appstyle(
+                                      14,
+                                      Color(kDark.value),
+                                      FontWeight.w600,
+                                    ),
+                                  ),
+                                  HeightSpacer(size: 20),
+                                  CustomOutlineBtn(
+                                    width: width,
+                                    height: 40.h,
+                                    text: 'Upload a job',
+                                    color: Color(kOrange.value),
+                                  ),
+                                ],
+                              )
+                              : CustomOutlineBtn(
+                                width: width,
+                                height: 40.h,
+                                text: 'Apply to become an agent',
+                                color: Color(kOrange.value),
+                              ),
+
+                          HeightSpacer(size: 20.h),
 
                           CustomOutlineBtn(
                             onTab: () {

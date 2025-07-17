@@ -3,6 +3,8 @@ import 'package:findjob/controllers/skills_provider.dart';
 import 'package:findjob/models/response/auth/skills.dart';
 import 'package:findjob/services/helpers/auth_helper.dart';
 import 'package:findjob/views/common/exports.dart';
+import 'package:findjob/views/common/pages_loader.dart';
+import 'package:findjob/views/screens/auth/widgets/addSkills.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -33,6 +35,7 @@ class _SkillsState extends State<SkillsWidget> {
   @override
   Widget build(BuildContext context) {
     var zoomNotifier = Provider.of<ZoomNotifier>(context);
+    var skillNotifier = Provider.of<SkillsNotifier>(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,18 +51,74 @@ class _SkillsState extends State<SkillsWidget> {
               ),
               Consumer<SkillsNotifier>(
                 builder: (context, skillNotifier, child) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Icon(
-                      MaterialCommunityIcons.plus_circle_outline,
-                      size: 20,
-                    ),
-                  );
+                  return skillNotifier.addSkills
+                      ? GestureDetector(
+                        onTap: () {
+                          skillNotifier.setSkills = !skillNotifier.addSkills;
+                        },
+                        child: Icon(
+                          MaterialCommunityIcons.plus_circle_outline,
+                          size: 24,
+                        ),
+                      )
+                      : GestureDetector(
+                        onTap: () {
+                          skillNotifier.setSkills = !skillNotifier.addSkills;
+                        },
+                        child: Icon(AntDesign.closecircleo, size: 20),
+                      );
                 },
               ),
             ],
           ),
         ),
+
+        skillNotifier.addSkills == true
+            ? AddSkillsWidget(skill: userskills, onTap: () {})
+            : SizedBox(
+              height: 33.w,
+              child: FutureBuilder(
+                future: userSkills,
+                builder: (context, snapshort) {
+                  if (snapshort.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator.adaptive());
+                  } else if (snapshort.hasError) {
+                    return Text('Error: ${snapshort.error}');
+                  } else {
+                    var skills = snapshort.data;
+                    return ListView.builder(
+                      itemCount: skills!.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        var skill = skills[index];
+                        return Container(
+                          padding: EdgeInsets.all(5.w),
+                          margin: EdgeInsets.all(4.w),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.w),
+                            ),
+                            color: Color(kLightGrey.value),
+                          ),
+                          child: Row(
+                            children: [
+                              ReusableText(
+                                text: skill.skill,
+                                style: appstyle(
+                                  10,
+                                  Color(kDark.value),
+                                  FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
       ],
     );
   }

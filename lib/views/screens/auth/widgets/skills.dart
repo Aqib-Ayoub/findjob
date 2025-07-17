@@ -4,6 +4,7 @@ import 'package:findjob/models/response/auth/skills.dart';
 import 'package:findjob/services/helpers/auth_helper.dart';
 import 'package:findjob/views/common/exports.dart';
 import 'package:findjob/views/common/pages_loader.dart';
+import 'package:findjob/views/common/width_spacer.dart';
 import 'package:findjob/views/screens/auth/widgets/addSkills.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -91,26 +92,51 @@ class _SkillsState extends State<SkillsWidget> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         var skill = skills[index];
-                        return Container(
-                          padding: EdgeInsets.all(5.w),
-                          margin: EdgeInsets.all(4.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15.w),
-                            ),
-                            color: Color(kLightGrey.value),
-                          ),
-                          child: Row(
-                            children: [
-                              ReusableText(
-                                text: skill.skill,
-                                style: appstyle(
-                                  10,
-                                  Color(kDark.value),
-                                  FontWeight.w500,
-                                ),
+                        return GestureDetector(
+                          onLongPress: () {
+                            skillNotifier.setSkillsId = skill.id;
+                          },
+                          onDoubleTap: () {
+                            skillNotifier.setSkillsId = '';
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(5.w),
+                            margin: EdgeInsets.all(4.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.w),
                               ),
-                            ],
+                              color: Color(kLightGrey.value),
+                            ),
+                            child: Row(
+                              children: [
+                                ReusableText(
+                                  text: skill.skill,
+                                  style: appstyle(
+                                    10,
+                                    Color(kDark.value),
+                                    FontWeight.w500,
+                                  ),
+                                ),
+                                WidthSpacer(width: 5),
+                                skillNotifier.addSkillsId == skill.id
+                                    ? GestureDetector(
+                                      onTap: () {
+                                        AuthHelper.deleteSkill(
+                                          skillNotifier.addSkillsId,
+                                        );
+                                        skillNotifier.setSkillsId = '';
+                                        userSkills = getSkills();
+                                      },
+                                      child: Icon(
+                                        AntDesign.delete,
+                                        size: 14,
+                                        color: Color(kDark.value),
+                                      ),
+                                    )
+                                    : SizedBox.shrink(),
+                              ],
+                            ),
                           ),
                         );
                       },

@@ -98,4 +98,54 @@ class AuthHelper {
       throw Exception('Failed to get profile $error');
     }
   }
+
+  static Future<bool> deleteSkill(String id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token == null) {
+      throw Exception('No autentication token provided');
+    }
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer $token',
+    };
+    var url = Uri.http(Config.apiUrl, "${Config.skillsUrl}/$id");
+    try {
+      var response = await client.delete(url, headers: requestHeaders);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static Future<bool> addSkills(String model) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token == null) {
+      throw Exception('No autentication token provided');
+    }
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'authorization': 'Bearer $token',
+    };
+    var url = Uri.http(Config.apiUrl, Config.skillsUrl);
+    try {
+      var response = await client.post(
+        url,
+        headers: requestHeaders,
+        body: model,
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
 }

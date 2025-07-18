@@ -1,9 +1,9 @@
 import 'package:findjob/controllers/exports.dart';
 import 'package:findjob/controllers/skills_provider.dart';
+import 'package:findjob/models/request/auth/add_skills.dart';
 import 'package:findjob/models/response/auth/skills.dart';
 import 'package:findjob/services/helpers/auth_helper.dart';
 import 'package:findjob/views/common/exports.dart';
-import 'package:findjob/views/common/pages_loader.dart';
 import 'package:findjob/views/common/width_spacer.dart';
 import 'package:findjob/views/screens/auth/widgets/addSkills.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +75,17 @@ class _SkillsState extends State<SkillsWidget> {
         ),
 
         skillNotifier.addSkills == true
-            ? AddSkillsWidget(skill: userskills, onTap: () {})
+            ? AddSkillsWidget(
+              skill: userskills,
+              onTap: () {
+                AddSkill rawModel = AddSkill(skill: userskills.text);
+                var model = addSkillToJson(rawModel);
+                AuthHelper.addSkills(model);
+                userSkills = getSkills();
+                // userSkills.clear();
+                skillNotifier.setSkills = !skillNotifier.addSkills;
+              },
+            )
             : SizedBox(
               height: 33.w,
               child: FutureBuilder(

@@ -14,6 +14,7 @@ import 'package:findjob/views/common/reusable_text.dart';
 import 'package:findjob/views/common/styled_container.dart';
 import 'package:findjob/views/common/width_spacer.dart';
 import 'package:findjob/views/screens/auth/non_user.dart';
+import 'package:findjob/views/screens/auth/widgets/edit_button.dart';
 import 'package:findjob/views/screens/auth/widgets/skills.dart';
 import 'package:findjob/views/screens/mainscreen.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late Future<ProfileRes> userProfile;
   String username = '';
+  String profile = '';
+  String image = 'https://avatars.githubusercontent.com/u/52028089?v=4';
 
   @override
   void initState() {
@@ -57,10 +60,12 @@ class _ProfilePageState extends State<ProfilePage> {
     if (widget.drawer == false && loginNotifier.loggedIn == true) {
       setState(() {
         username = prefs.getString('username') ?? '';
+        profile = prefs.getString('profile') ?? '';
       });
     } else if (widget.drawer == true && loginNotifier.loggedIn == true) {
       setState(() {
         username = prefs.getString('username') ?? '';
+        profile = prefs.getString('profile') ?? '';
       });
     } else {}
   }
@@ -70,9 +75,11 @@ class _ProfilePageState extends State<ProfilePage> {
     var zoomNotifier = Provider.of<ZoomNotifier>(context);
     var loginNotifier = Provider.of<LoginNotifier>(context);
     return Scaffold(
+      backgroundColor: Color(kLightBlue.value),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.h),
         child: CustomAppBar(
+          color: Color(kLightBlue.value),
           text: loginNotifier.loggedIn ? username.toUpperCase() : '',
           child: Padding(
             padding: EdgeInsets.all(12.h),
@@ -86,133 +93,235 @@ class _ProfilePageState extends State<ProfilePage> {
       body:
           loginNotifier.loggedIn == false
               ? NonUser()
-              : FutureBuilder(
-                future: userProfile,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return PageLoader();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    var profile = snapshot.data;
-                    return buildStyledContainer(
-                      context,
-                      ListView(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+              : Stack(
+                children: [
+                  Positioned(
+                    right: 0,
+                    left: 0,
+                    bottom: 0,
+                    top: 0,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 20.h,
+                      ),
+                      height: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                        color: Color(kDarkPurple.value),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            width: width,
-                            height: hieght * 0.07,
-                            decoration: BoxDecoration(
-                              color: Color(kGreen.value),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    CircularAvata(
-                                      image: profile!.profile,
-                                      w: 50,
-                                      h: 50,
-                                    ),
-                                    WidthSpacer(width: 20.w),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        ReusableText(
-                                          text: profile.username,
-                                          style: appstyle(
-                                            14,
-                                            kDarkGrey,
-                                            FontWeight.w400,
-                                          ),
-                                        ),
-                                        ReusableText(
-                                          text: profile.email,
-                                          style: appstyle(
-                                            14,
-                                            Color(kDarkGrey.value),
-                                            FontWeight.w400,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Icon(Feather.edit),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          HeightSpacer(size: 20),
-                          SkillsWidget(),
-                          HeightSpacer(size: 20),
-
-                          !profile.isAgent
-                              ? Column(
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircularAvata(image: image, w: 50, h: 50),
+                              WidthSpacer(width: 20.w),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   ReusableText(
-                                    text: 'Agent Section',
+                                    text: username,
                                     style: appstyle(
                                       14,
+                                      kDarkGrey,
+                                      FontWeight.w400,
+                                    ),
+                                  ),
+                                  ReusableText(
+                                    text: 'email',
+                                    style: appstyle(
+                                      14,
+                                      Color(kDarkGrey.value),
+                                      FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Icon(Feather.edit),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Positioned(
+                    right: 0,
+                    left: 0,
+                    bottom: 0,
+                    top: 90.h,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+
+                        color: Color(kLight.value),
+                      ),
+
+                      child: FutureBuilder(
+                        future: userProfile,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return PageLoader();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            var profile = snapshot.data;
+                            return buildStyledContainer(
+                              context,
+                              ListView(
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                children: [
+                                  HeightSpacer(size: 30),
+                                  ReusableText(
+                                    text: 'Profile',
+                                    style: appstyle(
+                                      15,
                                       Color(kDark.value),
                                       FontWeight.w600,
                                     ),
                                   ),
-                                  HeightSpacer(size: 10),
-                                  CustomOutlineBtn(
-                                    width: width,
-                                    height: 40.h,
-                                    text: 'Add a job',
-                                    color: Color(kOrange.value),
+                                  SizedBox(height: 15),
+
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(12),
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                          color: Color(kLightGrey.value),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(12),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 10,
+                                                horizontal: 10,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Color(kLight.value),
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(12),
+                                                ),
+                                              ),
+                                              child: Icon(
+                                                AntDesign.pdffile1,
+                                                size: 35,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                ReusableText(
+                                                  text: 'Upload Your Resume',
+                                                  style: appstyle(
+                                                    15,
+                                                    Color(kDark.value),
+                                                    FontWeight.w400,
+                                                  ),
+                                                ),
+                                                HeightSpacer(size: 5),
+                                                ReusableText(
+                                                  text:
+                                                      'Please make sure to upload your resume in pdf format',
+                                                  style: appstyle(
+                                                    8,
+                                                    Color(kDark.value),
+                                                    FontWeight.normal,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Positioned(right: 0, child: EditButton()),
+                                    ],
                                   ),
-                                  HeightSpacer(size: 10),
+                                  HeightSpacer(size: 25),
+                                  SkillsWidget(),
+                                  HeightSpacer(size: 20),
+
+                                  !profile!.isAgent
+                                      ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ReusableText(
+                                            text: 'Agent Section',
+                                            style: appstyle(
+                                              14,
+                                              Color(kDark.value),
+                                              FontWeight.w600,
+                                            ),
+                                          ),
+                                          HeightSpacer(size: 10),
+                                          CustomOutlineBtn(
+                                            width: width,
+                                            height: 40.h,
+                                            text: 'Add a job',
+                                            color: Color(kOrange.value),
+                                          ),
+                                          HeightSpacer(size: 10),
+                                          CustomOutlineBtn(
+                                            width: width,
+                                            height: 40.h,
+                                            text: 'Upload Information',
+                                            color: Color(kOrange.value),
+                                          ),
+                                        ],
+                                      )
+                                      : CustomOutlineBtn(
+                                        width: width,
+                                        height: 40.h,
+                                        text: 'Apply to become an agent',
+                                        color: Color(kOrange.value),
+                                      ),
+
+                                  HeightSpacer(size: 20.h),
+
                                   CustomOutlineBtn(
+                                    onTab: () {
+                                      zoomNotifier.currentIndex = 0;
+                                      loginNotifier.logout();
+                                      Get.to(() => MainScreen());
+                                    },
                                     width: width,
-                                    height: 40.h,
-                                    text: 'Upload Information',
-                                    color: Color(kOrange.value),
+                                    height: 60,
+                                    text: 'Logout',
+                                    color: Color(kLight.value),
+                                    background: Color(Colors.red.value),
                                   ),
                                 ],
-                              )
-                              : CustomOutlineBtn(
-                                width: width,
-                                height: 40.h,
-                                text: 'Apply to become an agent',
-                                color: Color(kOrange.value),
                               ),
-
-                          HeightSpacer(size: 20.h),
-
-                          CustomOutlineBtn(
-                            onTab: () {
-                              zoomNotifier.currentIndex = 0;
-                              loginNotifier.logout();
-                              Get.to(() => MainScreen());
-                            },
-                            width: width,
-                            height: 60,
-                            text: 'Logout',
-                            color: Color(kLight.value),
-                            background: Color(Colors.red.value),
-                          ),
-                        ],
+                            );
+                          }
+                        },
                       ),
-                    );
-                  }
-                },
+                    ),
+                  ),
+                ],
               ),
     );
   }

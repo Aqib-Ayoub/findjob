@@ -16,6 +16,7 @@ import 'package:findjob/views/common/width_spacer.dart';
 import 'package:findjob/views/screens/auth/non_user.dart';
 import 'package:findjob/views/screens/auth/widgets/edit_button.dart';
 import 'package:findjob/views/screens/auth/widgets/skills.dart';
+import 'package:findjob/views/screens/jobs/add_jobs.dart';
 import 'package:findjob/views/screens/mainscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,8 +36,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late Future<ProfileRes> userProfile;
   String username = '';
-  String profile = '';
-  String image = 'https://avatars.githubusercontent.com/u/52028089?v=4';
+  String profilePic = '';
+  ProfileRes? profile;
+  String image =
+      'https://media.collegedekho.com/media/img/institute/logo/1423483994.jpg?width=48';
 
   @override
   void initState() {
@@ -60,12 +63,12 @@ class _ProfilePageState extends State<ProfilePage> {
     if (widget.drawer == false && loginNotifier.loggedIn == true) {
       setState(() {
         username = prefs.getString('username') ?? '';
-        profile = prefs.getString('profile') ?? '';
+        profilePic = prefs.getString('profile') ?? '';
       });
     } else if (widget.drawer == true && loginNotifier.loggedIn == true) {
       setState(() {
         username = prefs.getString('username') ?? '';
-        profile = prefs.getString('profile') ?? '';
+        profilePic = prefs.getString('profile') ?? '';
       });
     } else {}
   }
@@ -86,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child:
                 widget.drawer == false
                     ? BackBtn()
-                    : DrawerWidget(color: Color(kDark.value)),
+                    : DrawerWidget(color: Color(kLight.value)),
           ),
         ),
       ),
@@ -111,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
                         ),
-                        color: Color(kDarkPurple.value),
+                        color: Color(Color.fromARGB(255, 61, 32, 226).value),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,35 +123,60 @@ class _ProfilePageState extends State<ProfilePage> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CircularAvata(image: image, w: 50, h: 50),
+                              CircularAvata(
+                                image: profile!.profile ?? image,
+                                w: 50,
+                                h: 50,
+                              ),
                               WidthSpacer(width: 20.w),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ReusableText(
-                                    text: username,
-                                    style: appstyle(
-                                      14,
-                                      kDarkGrey,
-                                      FontWeight.w400,
+                              SizedBox(
+                                height: 50,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    // ReusableText(
+                                    //   text: username,
+                                    //   style: appstyle(
+                                    //     14,
+                                    //     kLight,
+                                    //     FontWeight.w400,
+                                    //   ),
+                                    // ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 4,
+                                        horizontal: 7,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(20),
+                                        ),
+                                        color: Colors.white30,
+                                      ),
+                                      child: ReusableText(
+                                        text: profile!.email ?? 'User email',
+                                        style: appstyle(
+                                          14,
+                                          Color(kLight.value),
+                                          FontWeight.w400,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  ReusableText(
-                                    text: 'email',
-                                    style: appstyle(
-                                      14,
-                                      Color(kDarkGrey.value),
-                                      FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                           GestureDetector(
                             onTap: () {},
-                            child: Icon(Feather.edit),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Icon(
+                                Feather.edit,
+                                color: Color(kLight.value),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -179,7 +207,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else {
-                            var profile = snapshot.data;
+                            profile = snapshot.data;
                             return buildStyledContainer(
                               context,
                               ListView(
@@ -279,6 +307,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                           HeightSpacer(size: 10),
                                           CustomOutlineBtn(
                                             width: width,
+                                            onTab: () {
+                                              Get.to(() => AddJobs());
+                                            },
                                             height: 40.h,
                                             text: 'Add a job',
                                             color: Color(kOrange.value),

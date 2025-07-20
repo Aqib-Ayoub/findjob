@@ -124,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CircularAvata(
-                                image: profile!.profile ?? image,
+                                image: profile?.profile ?? image,
                                 w: 50,
                                 h: 50,
                               ),
@@ -155,7 +155,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                         color: Colors.white30,
                                       ),
                                       child: ReusableText(
-                                        text: profile!.email ?? 'User email',
+                                        text:
+                                            profile?.email ??
+                                            'showkat@gmail.com',
                                         style: appstyle(
                                           14,
                                           Color(kLight.value),

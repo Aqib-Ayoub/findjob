@@ -33,7 +33,7 @@ class ProfileRes {
   factory ProfileRes.fromJson(Map<String, dynamic> json) => ProfileRes(
     id: json["_id"],
     username: json["username"],
-    email: json["email"],
+    email: json["email"] ?? '',
     isAdmin: json["isAdmin"],
     isAgent: json["isAgent"],
     // skills: List<String>.from(json["skills"].map((x) => x)),
@@ -49,7 +49,7 @@ class ProfileRes {
     //  location: json["location"],
     location: json["location"] ?? '',
     phone: json["phone"] ?? '',
-    profile: json["profile"],
+    profile: json["profile"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {

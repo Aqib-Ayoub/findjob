@@ -1,6 +1,7 @@
 import 'package:findjob/constants/app_constants.dart';
 import 'package:findjob/views/common/app_bar.dart';
 import 'package:findjob/views/common/back_btn.dart';
+import 'package:findjob/views/common/styled_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,7 +14,11 @@ class AddJobs extends StatelessWidget {
       backgroundColor: Color(kLightBlue.value),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.w),
-        child: CustomAppBar(child: BackBtn()),
+        child: CustomAppBar(
+          color: Color(kLightBlue.value),
+          text: 'Upload jobs',
+          child: BackBtn(),
+        ),
       ),
       body: Stack(
         children: [
@@ -23,13 +28,25 @@ class AddJobs extends StatelessWidget {
             bottom: 0,
             top: 0,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                 ),
-                color: Color(kLightBlue.value),
+                color: Color(kLight.value),
+              ),
+              child: buildStyledContainer(
+                context,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 20.w,
+                  ),
+                  child: ListView(children: [
+                    
+                
+                ],),
+                ),
               ),
             ),
           ),

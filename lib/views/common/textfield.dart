@@ -10,7 +10,7 @@ class buildtextfield extends StatelessWidget {
     this.keyboard,
     this.onSubmitted,
     this.onChanged,
-    required this.maxLines,
+    this.maxLines,
     this.label,
     this.height,
     this.suffixIcon,
@@ -23,7 +23,7 @@ class buildtextfield extends StatelessWidget {
   final String? Function(String?)? onSubmitted;
   final void Function()? onTap;
   final void Function(String)? onChanged;
-  final int maxLines;
+  final int? maxLines;
   final Widget? label;
   final double? height;
   final Widget? suffixIcon;

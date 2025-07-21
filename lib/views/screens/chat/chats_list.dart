@@ -4,7 +4,6 @@ import 'package:findjob/views/common/app_bar.dart';
 import 'package:findjob/views/common/app_style.dart';
 import 'package:findjob/views/common/cached_network_image.dart';
 import 'package:findjob/views/common/drawer/drawer_widget.dart';
-import 'package:findjob/views/common/reusable_text.dart';
 import 'package:findjob/views/screens/auth/non_user.dart';
 import 'package:findjob/views/screens/auth/profile.dart';
 import 'package:flutter/material.dart';
@@ -59,11 +58,198 @@ class _ChatListState extends State<ChatList> {
       body:
           loginNotifier.loggedIn == false
               ? NonUser()
-              : Center(
-                child: ReusableText(
-                  text: 'Chat List Page',
-                  style: appstyle(30, Color(kDark.value), FontWeight.bold),
-                ),
+              : Column(
+                children: [
+                  // Chat list
+                  Expanded(
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 10.h,
+                      ),
+                      children: [
+                        // Uploader message
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 6.h),
+                            padding: EdgeInsets.all(12.h),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(16.r),
+                                topRight: Radius.circular(16.r),
+                                bottomRight: Radius.circular(16.r),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Hello! We liked your resume.',
+                                  style: appstyle(
+                                    14,
+                                    Colors.black87,
+                                    FontWeight.normal,
+                                  ),
+                                ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  '10:12 AM',
+                                  style: appstyle(
+                                    10,
+                                    Colors.grey,
+                                    FontWeight.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        // Applicant message
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 6.h),
+                            padding: EdgeInsets.all(12.h),
+                            decoration: BoxDecoration(
+                              color: Color(kLightBlue.value),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(16.r),
+                                topRight: Radius.circular(16.r),
+                                bottomLeft: Radius.circular(16.r),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Thank you! When can we talk?',
+                                  style: appstyle(
+                                    14,
+                                    Colors.white,
+                                    FontWeight.normal,
+                                  ),
+                                ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  '10:14 AM',
+                                  style: appstyle(
+                                    10,
+                                    Colors.white70,
+                                    FontWeight.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        // Another uploader message
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(vertical: 6.h),
+                            padding: EdgeInsets.all(12.h),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(16.r),
+                                topRight: Radius.circular(16.r),
+                                bottomRight: Radius.circular(16.r),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Let\'s connect tomorrow at 11 AM.',
+                                  style: appstyle(
+                                    14,
+                                    Colors.black87,
+                                    FontWeight.normal,
+                                  ),
+                                ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  '10:15 AM',
+                                  style: appstyle(
+                                    10,
+                                    Colors.grey,
+                                    FontWeight.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Chat input
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 10.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(0, -2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        // Image icon
+                        IconButton(
+                          icon: Icon(Icons.image, color: Color(kDark.value)),
+                          onPressed: () {
+                            // Image picker logic goes here
+                          },
+                        ),
+                        // Text field
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "Type a message...",
+                              hintStyle: appstyle(
+                                14,
+                                Colors.grey,
+                                FontWeight.normal,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.r),
+                                borderSide: BorderSide.none,
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey.shade100,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 16.w,
+                                vertical: 10.h,
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Send button
+                        IconButton(
+                          icon: Icon(
+                            Icons.send,
+                            color: Color(kLightBlue.value),
+                          ),
+                          onPressed: () {
+                            // Send message logic goes here
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
     );
   }

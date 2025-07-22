@@ -180,6 +180,14 @@ class _ChatListState extends State<ChatList> {
                                     FontWeight.normal,
                                   ),
                                 ),
+                                Text(
+                                  'Let\'s connect tomorrow at 11 AM.',
+                                  style: appstyle(
+                                    14,
+                                    Colors.black87,
+                                    FontWeight.normal,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
